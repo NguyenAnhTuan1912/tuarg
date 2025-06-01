@@ -1,0 +1,42 @@
+#ifndef TUARG_FLAG_H
+#define TUARG_FLAG_H
+
+#include "tuarg_types.h"
+
+namespace Tuarg {
+  class TuargFlag;
+  typedef std::unordered_map<std::string, std::shared_ptr<TuargFlag>> TuargFlagMap;
+
+  /**
+   * @class TuargFlag
+   * @brief Class dùng để quản lý các option.
+   * 
+   * Khi thêm một option mới, thì mình có thể có nhiều lựa chọn
+   * để định nghĩa option đó.
+   */
+  class TuargFlag {
+    public:
+
+      TuargFlag();
+      TuargFlag(const std::string& value);
+      TuargFlag(const std::string& value, const std::string& shortName);
+
+      /**
+       * @brief Lấy giá trị thực, chính thức của option.
+       */
+      std::string getValue() const;
+
+      /**
+       * @brief lấy short name của flag.
+       */
+      std::string getShortName() const;
+
+    private:
+
+      std::string value_;
+      std::string shortName_;
+  };
+
+}
+
+#endif

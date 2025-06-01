@@ -1,7 +1,7 @@
 #include <iostream>
 
 // Thêm thư viện
-#include "parser.h"
+#include "tuarg_parser.h"
 
 int main(int argc, char* argv[]) {
   std::cout << "Bắt đầu kiểm thử thư viện tuarg\n";
@@ -9,13 +9,26 @@ int main(int argc, char* argv[]) {
   // Viết test ở đây :)
   Tuarg::TuargParser parser = Tuarg::TuargParser();
 
-  parser.addOption("-h");
+  parser.addCommand(
+    "add",
+    {
+      { "help", "h" }
+    },
+    {
+      { "operands", "opds", Tuarg::EPositionalArg::Required }
+    }    
+  );
+
+  std::cout << "Bắt đầu phân tích tham số\n";
+
   parser.parse(argc, argv);
 
-  const Tuarg::TuargParserOptions& options = parser.getOptions();
+  std::cout << "Phân tích tham số xong\n";
 
-  for (const auto& optionPair : options) {
-    std::cout << optionPair.first << " : " << optionPair.second << std::endl;
+  const Tuarg::TuargParserArgs& args = parser.getArgs();
+
+  for (const std::string& arg : args) {
+    std::cout << arg << std::endl;
   }
 
   std::cout << "Kết thúc kiểm thử thư viện\n";

@@ -1,54 +1,66 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef TUARG_PARSER_H
+#define TUARG_PARSER_H
 
-#include <string>
-#include <unordered_map>
-#include <vector>
+#include "tuarg_types.h"
+#include "tuarg_option.h"
+#include "tuarg_command.h"
 
 namespace Tuarg {
 
-typedef bool TuargParserOption;
-typedef std::unordered_map<std::string, TuargParserOption> TuargParserOptions;
+  typedef std::unordered_map<std::string, bool> TuargParserArgMap;
+  typedef std::vector<std::string> TuargParserArgs;
 
-/**
- * @class ArgParser
- * @brief Class để xử lý parsing các đối số dòng lệnh.
- * 
- * Lớp này cung cấp chức năng thêm các option và kiểm tra xem
- * option nào có được truyền vào khi chạy chương trình.
- */
-class TuargParser {
-  public:
-    /**
-     * @brief Kiểm tra xem một option nào đó có tồn tại trong parser
-     * 
-     * @param name tên của option
-     * @return void
-     */
-    void parse(int argc, char* argv[]);
+  /**
+   * @class ArgParser
+   * @brief Class để xử lý parsing các đối số dòng lệnh.
+   * 
+   * Lớp này cung cấp chức năng thêm các flag và kiểm tra xem
+   * flag nào có được truyền vào khi chạy chương trình.
+   */
+  class TuargParser {
+    public:
+      TuargParser();
 
-    /**
-     * @brief Thêm một option mới vào trong map
-     * 
-     * @param name tên của option
-     * @return void
-     */
-    void addOption(const std::string& name);
+      /**
+       * @brief Kiểm tra xem một flag nào đó có tồn tại trong parser
+       * 
+       * @param name tên của flag
+       * @return void
+       */
+      void parse(int argc, char* argv[]);
 
-    /**
-     * @brief Kiểm tra xem một option nào đó có tồn tại trong parser
-     * hay không?
-     * 
-     * @param name tên của option
-     * @return nếu như có thì là `true` còn không thì `false`
-     */
-    bool hasOption(const std::string& name) const;
+      /**
+       * @brief Thêm một command mới vào trong parser với một số
+       * thông tin cơ bản của command.
+       * 
+       * @param command giá trị của command, được dùng trong cli.
+       * @param flags một danh sách đề mục các flags của command.
+       * @param options một danh sách đề mục các options của command.
+       */
+      void addCommand(
+        const std::string& command,
+        const std::vector<TuargFlag>& flags,
+        const std::vector<TuargOption>& options
+      );
 
-    const TuargParserOptions& getOptions() const;
+      /**
+       * @brief Thêm một command mới vào trong parser.
+       * 
+       * @param tuargCommand instance của tuargCommand
+       */
+      void addCommand(TuargCommand& tuargCommand);
 
-  private:
-    TuargParserOptions options_;
-};
+      /**
+       * @brief Lấy tham chiếu của danh sách các tham số trong parser.
+       */
+      const TuargParserArgs& getArgs() const;
+
+      private:
+
+        TuargCommand* currentCommand_ = nullptr;
+        TuargCommandMap commandMap_;
+        TuargParserArgs args_;
+  };
 
 }
 
