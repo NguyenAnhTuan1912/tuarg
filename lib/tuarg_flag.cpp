@@ -3,12 +3,12 @@
 namespace Tuarg {
   TuargFlag::TuargFlag() {}
 
-  TuargFlag::TuargFlag(const std::string& value) {
-    this->value_ = value;
+  TuargFlag::TuargFlag(const std::string& name) {
+    this->name_ = name;
   };
 
-  TuargFlag::TuargFlag(const std::string& value, const std::string& shortName) {
-    this->value_ = value;
+  TuargFlag::TuargFlag(const std::string& name, const std::string& shortName) {
+    this->name_ = name;
     this->shortName_ = shortName;
   };
   
@@ -16,7 +16,7 @@ namespace Tuarg {
     return this->shortName_;
   };
 
-  std::string TuargFlag::getValue() const {
-    return this->value_;
+  std::string TuargFlag::getName() const {
+    return this->name_;
   };
 }

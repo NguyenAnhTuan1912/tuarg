@@ -7,7 +7,7 @@
 
 namespace Tuarg {
   class TuargCommand;
-  typedef std::unordered_map<std::string, TuargCommand> TuargCommandMap;
+  using TuargCommandMap = std::unordered_map<std::string, TuargCommand>;
   
   /**
    * @class TuargCommand
@@ -20,21 +20,21 @@ namespace Tuarg {
     public:
 
       TuargCommand();
-      TuargCommand(const std::string& value);
+      TuargCommand(const std::string& commandName);
 
       /**
        * @brief Thêm một option mới vào trong danh sách với
        * một số thông tin cơ bản của option.
        * 
-       * @param value giá trị thực của option
+       * @param name giá trị thực của option
        * @param shortName tên ngắn đại diện cho option
        * @param longName tên dài đại diện cho option
        * @param positionalType kiểu positional argument
        */
       void addOptionDefinition(
-        const std::string& value,
+        const std::string& name,
         const std::string& shortName,
-        EPositionalArg positionalType = EPositionalArg::Optional
+        EPositionalArg positionalType = EPositionalArg::OnlyOne
       );
 
       /**
@@ -48,11 +48,11 @@ namespace Tuarg {
        * @brief Thêm một flag mới vào trong danh sách với các thông tin
        * cơ bản của flag.
        * 
-       * @param value giá trị thực của flag.
+       * @param name giá trị thực của flag.
        * @param shortName tên ngắn của flag.
        */
       void addFlagDefinition(
-        const std::string& value,
+        const std::string& name,
         const std::string& shortName
       );
 
@@ -66,10 +66,20 @@ namespace Tuarg {
        */
       std::string getValue() const;
 
+      /**
+       * @brief Lấy tham chiếu của danh sách các options
+       */
+      const TuargOptionMap& getOptionMap();
+
+      /**
+       * @brief Lấy tham chiếu của danh sách các flags
+       */
+      const TuargFlagMap& getFlagMap();
+
     private:
 
       std::string value_;
-      TuargOptionMap optionsMap_;
+      TuargOptionMap optionMap_;
       TuargFlagMap flagMap_;
   };
 

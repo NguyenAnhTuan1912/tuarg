@@ -5,16 +5,14 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
+#include <variant>
 
 namespace Tuarg {
-
   enum class EPositionalArg {
-    Required,
-    Optional,
-    Variadic
+    OnlyOne,
+    Many
   };
-  typedef std::string TuargArg;
-
+  using TuargParseResult = std::unordered_map<std::string, std::variant<std::vector<std::string>, bool>>;
 }
 
 #endif

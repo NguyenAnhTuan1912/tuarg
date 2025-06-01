@@ -3,21 +3,21 @@
 namespace Tuarg {
   TuargOption::TuargOption() {};
 
-  TuargOption::TuargOption(const std::string& value) {
-    this->value_ = value;
+  TuargOption::TuargOption(const std::string& name) {
+    this->name_ = name;
   };
 
-  TuargOption::TuargOption(const std::string& value, Tuarg::EPositionalArg positionalType) {
-    this->value_ = value;
+  TuargOption::TuargOption(const std::string& name, Tuarg::EPositionalArg positionalType) {
+    this->name_ = name;
     this->positionalType_ = positionalType;
   };
 
   TuargOption::TuargOption(
-    const std::string& value,
+    const std::string& name,
     const std::string& shortName,
     Tuarg::EPositionalArg positionalType
   ) {
-    this->value_ = value;
+    this->name_ = name;
     this->shortName_ = shortName;
     this->positionalType_ = positionalType;
   };
@@ -26,16 +26,8 @@ namespace Tuarg {
     this->positionalType_ = positionalType;
   };
 
-  void TuargOption::setArgs(const std::vector<std::string>& args) {
-    this->args_ = args;
-  };
-  
-  void TuargOption::addArg(const std::string& arg) {
-    this->args_.push_back(arg);
-  };
-
-  std::string TuargOption::getValue() const {
-    return this->value_;
+  std::string TuargOption::getName() const {
+    return this->name_;
   };
 
   std::string TuargOption::getShortName() const {
@@ -44,9 +36,5 @@ namespace Tuarg {
 
   Tuarg::EPositionalArg TuargOption::getPositionalType() const {
     return this->positionalType_;
-  };
-
-  const std::vector<std::string>& TuargOption::getArgs() const {
-    return this->args_;
   };
 }

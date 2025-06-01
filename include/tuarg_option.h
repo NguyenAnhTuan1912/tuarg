@@ -5,7 +5,7 @@
 
 namespace Tuarg {
   class TuargOption;
-  typedef std::unordered_map<std::string, std::shared_ptr<TuargOption>> TuargOptionMap;
+  using TuargOptionMap = std::unordered_map<std::string, std::shared_ptr<TuargOption>>;
 
   /**
    * @class TuargOption
@@ -18,10 +18,10 @@ namespace Tuarg {
     public:
 
       TuargOption();
-      TuargOption(const std::string& value);
-      TuargOption(const std::string& value, Tuarg::EPositionalArg positionalType);
+      TuargOption(const std::string& name);
+      TuargOption(const std::string& name, Tuarg::EPositionalArg positionalType);
       TuargOption(
-        const std::string& value,
+        const std::string& name,
         const std::string& shortName,
         Tuarg::EPositionalArg positionalType
       );
@@ -50,7 +50,7 @@ namespace Tuarg {
       /**
        * @brief Lấy giá trị thực, chính thức của option.
        */
-      std::string getValue() const;
+      std::string getName() const;
 
       /**
        * @brief Lấy tên ngắn của option.
@@ -62,17 +62,11 @@ namespace Tuarg {
        */
       Tuarg::EPositionalArg getPositionalType() const;
 
-      /**
-       * @brief Lấy tham  chiếu của danh sách tham số.
-       */
-      const std::vector<std::string>& getArgs() const;
-
     private:
 
-      std::string value_;
+      std::string name_;
       std::string shortName_;
-      std::vector<std::string> args_;
-      Tuarg::EPositionalArg positionalType_ = Tuarg::EPositionalArg::Optional;
+      Tuarg::EPositionalArg positionalType_ = Tuarg::EPositionalArg::OnlyOne;
   };
 
 }

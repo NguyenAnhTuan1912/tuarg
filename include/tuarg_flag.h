@@ -5,7 +5,7 @@
 
 namespace Tuarg {
   class TuargFlag;
-  typedef std::unordered_map<std::string, std::shared_ptr<TuargFlag>> TuargFlagMap;
+  using TuargFlagMap = std::unordered_map<std::string, std::shared_ptr<TuargFlag>>;
 
   /**
    * @class TuargFlag
@@ -18,13 +18,13 @@ namespace Tuarg {
     public:
 
       TuargFlag();
-      TuargFlag(const std::string& value);
-      TuargFlag(const std::string& value, const std::string& shortName);
+      TuargFlag(const std::string& name);
+      TuargFlag(const std::string& name, const std::string& shortName);
 
       /**
        * @brief Lấy giá trị thực, chính thức của option.
        */
-      std::string getValue() const;
+      std::string getName() const;
 
       /**
        * @brief lấy short name của flag.
@@ -33,7 +33,7 @@ namespace Tuarg {
 
     private:
 
-      std::string value_;
+      std::string name_;
       std::string shortName_;
   };
 

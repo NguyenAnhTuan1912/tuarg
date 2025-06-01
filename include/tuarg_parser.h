@@ -7,8 +7,8 @@
 
 namespace Tuarg {
 
-  typedef std::unordered_map<std::string, bool> TuargParserArgMap;
-  typedef std::vector<std::string> TuargParserArgs;
+  using TuargParserArgMap = std::unordered_map<std::string, bool>;
+  using TuargParserArgs = std::vector<std::string>;
 
   /**
    * @class ArgParser
@@ -55,11 +55,17 @@ namespace Tuarg {
        */
       const TuargParserArgs& getArgs() const;
 
+      /**
+       * @brief Lấy tham chiếu của danh sách kết quả của parser.
+       */
+      const TuargParseResult& getResult() const;
+
       private:
 
         TuargCommand* currentCommand_ = nullptr;
         TuargCommandMap commandMap_;
         TuargParserArgs args_;
+        TuargParseResult result_;
   };
 
 }
