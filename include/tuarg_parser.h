@@ -4,6 +4,7 @@
 #include "tuarg_types.h"
 #include "tuarg_option.h"
 #include "tuarg_command.h"
+#include "tuarg_command_group.h"
 
 namespace Tuarg {
 
@@ -19,7 +20,10 @@ namespace Tuarg {
    */
   class TuargParser {
     public:
-      TuargParser();
+      TuargParser(TuargCommandGroup& commandGroup): _commandGroup(commandGroup) {
+        this->_init();
+        this->_currentCommand = &this->_commandGroup.getRootCommandConstRef();
+      }
 
       /**
        * @brief Kiểm tra xem một flag nào đó có tồn tại trong parser
@@ -28,27 +32,6 @@ namespace Tuarg {
        * @return void
        */
       void parse(int argc, char* argv[]);
-
-      /**
-       * @brief Thêm một command mới vào trong parser với một số
-       * thông tin cơ bản của command.
-       * 
-       * @param command giá trị của command, được dùng trong cli.
-       * @param flags một danh sách đề mục các flags của command.
-       * @param options một danh sách đề mục các options của command.
-       */
-      void addCommand(
-        const std::string& command,
-        const std::vector<TuargFlag>& flags,
-        const std::vector<TuargOption>& options
-      );
-
-      /**
-       * @brief Thêm một command mới vào trong parser.
-       * 
-       * @param tuargCommand instance của tuargCommand
-       */
-      void addCommand(TuargCommand& tuargCommand);
 
       /**
        * @brief Lấy tham chiếu của danh sách các tham số trong parser.
@@ -60,12 +43,29 @@ namespace Tuarg {
        */
       const TuargParseResult& getResult() const;
 
+      /**
+       * @brief lấy tham chiếu của instance của command hiện tại.
+       */
+      const TuargCommand& getCurrentCommand() const;
+
+      /**
+       * @brief Lấy giá trị chuỗi của command hiện tại.
+       */
+      std::string getCurrentCommandValue();
+
       private:
 
-        TuargCommand* currentCommand_ = nullptr;
-        TuargCommandMap commandMap_;
-        TuargParserArgs args_;
-        TuargParseResult result_;
+        const TuargCommand* _currentCommand = nullptr;
+        TuargCommandGroup& _commandGroup;
+        TuargParserArgs _args = {};
+        TuargParseResult _result = {};
+
+        /**
+         * @brief Dùng để khởi tạo một số thông tin bao đầu cho Parser,
+         * bởi vì sẽ có một số thuộc tính, thông tin cần được khởi tạo
+         * trước và chúng ta có thể sẽ có nhiều hàm khởi tạo khác nhau.
+         */
+        void _init();
   };
 
 }

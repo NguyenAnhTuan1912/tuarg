@@ -25,6 +25,12 @@ namespace Tuarg {
         const std::string& shortName,
         Tuarg::EPositionalArg positionalType
       );
+      TuargOption(
+        const std::string& name,
+        const std::string& shortName,
+        Tuarg::EPositionalArg positionalType,
+        const std::string& description
+      );
 
       /**
        * @brief Gán giá trị mới cho positional type của option.
@@ -62,11 +68,22 @@ namespace Tuarg {
        */
       Tuarg::EPositionalArg getPositionalType() const;
 
+      /**
+       * @brief Thêm mô tả cho option.
+       */
+      void setDescription(std::string description);
+
+      /**
+       * @brief Lấy mô tả của option.
+       */
+      std::string getDescriptionCopy();
+
     private:
 
-      std::string name_;
-      std::string shortName_;
+      std::string _name;
+      std::string _shortName;
       Tuarg::EPositionalArg positionalType_ = Tuarg::EPositionalArg::OnlyOne;
+      std::string _description;
   };
 
 }

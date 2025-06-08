@@ -13,6 +13,8 @@ namespace Tuarg {
     Many
   };
   using TuargParseResult = std::unordered_map<std::string, std::variant<std::vector<std::string>, bool>>;
+  using TuargParserDescription = std::array<std::string, 2>;
+  using TuargParserDescriptions = std::vector<std::array<std::string, 2>>;
 }
 
 #endif

@@ -21,6 +21,7 @@ namespace Tuarg {
 
       TuargCommand();
       TuargCommand(const std::string& commandName);
+      TuargCommand(const std::string& commandName, const std::string& description);
 
       /**
        * @brief Thêm một option mới vào trong danh sách với
@@ -34,7 +35,8 @@ namespace Tuarg {
       void addOptionDefinition(
         const std::string& name,
         const std::string& shortName,
-        EPositionalArg positionalType = EPositionalArg::OnlyOne
+        EPositionalArg positionalType = EPositionalArg::OnlyOne,
+        const std::string& description = ""
       );
 
       /**
@@ -42,7 +44,7 @@ namespace Tuarg {
        * 
        * @param tuargOption instance cuar TuargOption
        */
-      void addOptionDefinition(const TuargOption& tuargOption);
+      void addOption(const TuargOption& tuargOption);
 
       /**
        * @brief Thêm một flag mới vào trong danh sách với các thông tin
@@ -53,34 +55,54 @@ namespace Tuarg {
        */
       void addFlagDefinition(
         const std::string& name,
-        const std::string& shortName
+        const std::string& shortName,
+        const std::string& description = ""
       );
 
       /**
        * @brief Thêm một flag mới vào trong danh sách.
        */
-      void addFlagDefinition(const TuargFlag& tuargFlag);
+      void addFlag(const TuargFlag& tuargFlag);
 
       /**
        * @brief Lấy giá trị thực của command.
        */
-      std::string getValue() const;
+      std::string getValueCopy() const;
 
       /**
        * @brief Lấy tham chiếu của danh sách các options
        */
-      const TuargOptionMap& getOptionMap();
+      const TuargOptionMap& getOptionMapConstRef() const;
 
       /**
        * @brief Lấy tham chiếu của danh sách các flags
        */
-      const TuargFlagMap& getFlagMap();
+      const TuargFlagMap& getFlagMapConstRef() const;
+
+      /**
+       * @brief Thêm mô tả cho command
+       */
+      void setDescription(std::string description);
+
+      /**
+       * @brief Lấy mô tả của command.
+       */
+      std::string getDescriptionCopy();
+
+      /**
+       * @brief In mô tả và hướng dẫn sử dụng thông qua
+       * các mô tả của flags và options (nếu có).
+       */
+      void printDescriptionAndManual() const;
 
     private:
 
-      std::string value_;
-      TuargOptionMap optionMap_;
-      TuargFlagMap flagMap_;
+      std::string _value;
+      TuargOptionMap _optionMap = {};
+      TuargFlagMap _flagMap = {};
+      std::string _description;
+      size_t _longestNameLength = 0;
+      size_t _longestShortNameLength = 0;
   };
 
 }

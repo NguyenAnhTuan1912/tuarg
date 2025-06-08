@@ -20,6 +20,7 @@ namespace Tuarg {
       TuargFlag();
       TuargFlag(const std::string& name);
       TuargFlag(const std::string& name, const std::string& shortName);
+      TuargFlag(const std::string& name, const std::string& shortName, const std::string& description);
 
       /**
        * @brief Lấy giá trị thực, chính thức của option.
@@ -31,10 +32,21 @@ namespace Tuarg {
        */
       std::string getShortName() const;
 
+      /**
+       * @brief Thêm mô tả cho flag.
+       */
+      void setDescription(std::string description);
+
+      /**
+       * @brief Lấy mô tả của flag.
+       */
+      std::string getDescriptionCopy();
+
     private:
 
-      std::string name_;
-      std::string shortName_;
+      std::string _name;
+      std::string _shortName;
+      std::string _description;
   };
 
 }
